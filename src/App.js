@@ -1,11 +1,12 @@
-import Map from "./components/Map";
+import HomePage from "./components/HomePage";
+import { LocationProvider } from "./context/location/LocationContext";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <Map />
-    </div>
+    <LocationProvider>
+      <HomePage />
+    </LocationProvider>
   );
 }
 
