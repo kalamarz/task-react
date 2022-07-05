@@ -3,8 +3,9 @@ import { fetchUserLocation } from "../context/location/LocationActions";
 import { GET_USER_LOCATION } from "../context/location/actionTypes";
 import LocationContext from "../context/location/LocationContext";
 import Map from "./Map";
+import Informations from "./Informations";
 
-function App() {
+function HomePage() {
   const { userLocation, dispatch } = useContext(LocationContext);
 
   useEffect(() => {
@@ -14,19 +15,22 @@ function App() {
     };
 
     getUserLocation();
-  }, []);
+  }, [dispatch]);
 
   const { latitude, longitude } = userLocation;
 
   return (
     <div className="App">
-      {!Object.keys(userLocation).length || !userLocation.success ? (
+      {!Object.keys(userLocation).length ? (
         <p>Error</p>
       ) : (
-        <Map position={[latitude, longitude]} />
+        <div>
+          <Map position={[latitude, longitude]} />
+          <Informations informations={userLocation} />
+        </div>
       )}
     </div>
   );
 }
 
-export default App;
+export default HomePage;
