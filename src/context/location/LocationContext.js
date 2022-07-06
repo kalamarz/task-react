@@ -5,7 +5,7 @@ const LocationContext = createContext();
 
 export const LocationProvider = ({ children }) => {
   const initialState = {
-    locations: [],
+    locationsList: [],
     userLocation: {},
     searchedLocation: {},
     loading: false,

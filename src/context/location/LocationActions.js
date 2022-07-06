@@ -11,3 +11,9 @@ export const fetchUserLocation = async () => {
 
   return data;
 };
+
+export const searchLocation = async (text) => {
+  const { data } = await ipstack.get(`${text}?access_key=${API_KEY}`);
+
+  return data;
+};

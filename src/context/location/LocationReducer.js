@@ -1,4 +1,4 @@
-import { GET_USER_LOCATION } from "./actionTypes";
+import { GET_USER_LOCATION, GET_SEARCHED_LOCATION } from "./actionTypes";
 
 const locationReducer = (state, action) => {
   switch (action.type) {
@@ -6,6 +6,12 @@ const locationReducer = (state, action) => {
       return {
         ...state,
         userLocation: action.payload,
+      };
+    case GET_SEARCHED_LOCATION:
+      return {
+        ...state,
+        searchedLocation: action.payload,
+        locationsList: [action.payload, ...state.locationsList],
       };
 
     default:
