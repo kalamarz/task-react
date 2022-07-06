@@ -1,19 +1,31 @@
-import { GET_USER_LOCATION, GET_SEARCHED_LOCATION } from "./actionTypes";
+import {
+  GET_USER_LOCATION,
+  GET_SEARCHED_LOCATION,
+  SET_ERROR_MESSAGE,
+} from "./actionTypes";
 
-const locationReducer = (state, action) => {
-  switch (action.type) {
+const locationReducer = (state, { type, payload }) => {
+  switch (type) {
     case GET_USER_LOCATION:
       return {
         ...state,
-        userLocation: action.payload,
+        userLocation: payload,
       };
     case GET_SEARCHED_LOCATION:
+      const isError = "success" in payload && !payload.success;
       return {
         ...state,
-        searchedLocation: action.payload,
-        locationsList: [action.payload, ...state.locationsList],
+        searchedLocation: payload,
+        locationsList: [payload, ...state.locationsList],
+        isError,
+        errorMessage: isError ? payload.error?.info : "",
       };
-
+    case SET_ERROR_MESSAGE:
+      return {
+        ...state,
+        errorMessage: payload.message,
+        isError: true,
+      };
     default:
       return state;
   }

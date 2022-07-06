@@ -8,7 +8,8 @@ export const LocationProvider = ({ children }) => {
     locationsList: [],
     userLocation: {},
     searchedLocation: {},
-    loading: false,
+    isError: false,
+    errorMessage: "",
   };
 
   const [state, dispatch] = useReducer(locationReducer, initialState);

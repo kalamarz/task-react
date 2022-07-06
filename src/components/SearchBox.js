@@ -1,12 +1,15 @@
 import { useState, useContext } from "react";
 import LocationContext from "../context/location/LocationContext";
 import { searchLocation } from "../context/location/LocationActions";
-import { GET_SEARCHED_LOCATION } from "../context/location/actionTypes";
+import {
+  GET_SEARCHED_LOCATION,
+  SET_ERROR_MESSAGE,
+} from "../context/location/actionTypes";
 
 function SearchBox() {
   const [text, setText] = useState("");
 
-  const { searchedLocation, dispatch } = useContext(LocationContext);
+  const { isError, errorMessage, dispatch } = useContext(LocationContext);
 
   const handleChange = (e) => setText(e.target.value);
 
@@ -14,7 +17,10 @@ function SearchBox() {
     e.preventDefault();
 
     if (text === "") {
-      console.log("empty");
+      dispatch({
+        type: SET_ERROR_MESSAGE,
+        payload: { message: "Enter Ip address" },
+      });
     } else {
       const location = await searchLocation(text);
       dispatch({ type: GET_SEARCHED_LOCATION, payload: location });
@@ -25,13 +31,25 @@ function SearchBox() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Search"
-        value={text}
-        onChange={handleChange}
-      />
-      <button type="submit">Search</button>
+      <div className="field has-addons">
+        <div className="control">
+          <input
+            className={`input round-lg ${isError ? "is-danger" : ""}`}
+            type="text"
+            placeholder="Search"
+            value={text}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="control">
+          <button type="submit" className="button is-link">
+            Search
+          </button>
+        </div>
+      </div>
+      <div className="control">
+        {errorMessage && <p className="help is-danger pb-2">{errorMessage}</p>}
+      </div>
     </form>
   );
 }

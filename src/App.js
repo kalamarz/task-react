@@ -1,6 +1,6 @@
 import HomePage from "./components/HomePage";
 import { LocationProvider } from "./context/location/LocationContext";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   return (

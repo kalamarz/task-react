@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = "c07f32ddb4cf88c98389695f30d73453";
 
 const ipstack = axios.create({
   baseURL: "http://api.ipstack.com/",

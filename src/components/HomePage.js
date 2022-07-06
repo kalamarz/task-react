@@ -20,20 +20,48 @@ function HomePage() {
     getUserLocation();
   }, [dispatch]);
 
-  const { latitude, longitude } = userLocation;
+  const { latitude: userLatitude, longitude: userLongitude } = userLocation;
+  const { latitude: searchedLatitude, longitude: searchedLongitude } =
+    searchedLocation;
 
   return (
-    <div className="App">
+    <div className="container">
       {!Object.keys(userLocation).length ? (
-        <p>Error</p>
+        <p>Loading...</p>
       ) : (
-        <div>
-          <LocationsList locations={locationsList} />
-          <Map position={[latitude, longitude]} />
-          <Informations informations={userLocation} />
-          <SearchBox />
-          <Map position={[latitude, longitude]} />
-          <Informations informations={searchedLocation} />
+        <div className="columns">
+          <div className="column is-one-quarter">
+            <LocationsList locations={locationsList} />
+          </div>
+          <div className="column">
+            <div className="columns">
+              <div className="column">
+                <Map latitude={userLatitude} longitude={userLongitude} />
+              </div>
+              <div className="column">
+                <Informations
+                  informations={userLocation}
+                  heading="User location"
+                />
+              </div>
+            </div>
+
+            <SearchBox />
+            <div className="columns">
+              <div className="column">
+                <Map
+                  latitude={searchedLatitude}
+                  longitude={searchedLongitude}
+                />
+              </div>
+              <div className="column">
+                <Informations
+                  informations={searchedLocation}
+                  heading="Last search"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
